@@ -9,7 +9,7 @@ setup(
     license="BSD 3-Clause Clear License",
     keywords="Fixedpoint ",
     python_requires=">=3.7",
-    url="https://gitlab.com/juhasch/fixedpoint",
+    url="https://github.com/juhasch/fixedpoint",
     packages=find_packages(),
     install_requires=['numpy'],
     long_description_content_type='text/markdown',
@@ -19,6 +19,6 @@ A simple Python module for fixedpoint calculations.
     classifiers=[
         "Development Status :: 4 - Beta",
         "Topic :: Utilities",
-        "License :: OSI Approved :: BSD License",
+        "License :: OSI Approved :: MIT License",
     ],
 )
