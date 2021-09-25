@@ -2,8 +2,6 @@
 
 
 """
-from __future__ import annotations
-import re
 from math import floor
 from .format import parse_fmt
 
@@ -58,7 +56,7 @@ class FixedPoint:
             raise ValueError(f'Implementation only allows 32 Bits for now, {numbits} Bits were requested.')
         return int(value * 2 ** self.n)
 
-    def to(self, fmt: str, policy: str = 'exact') -> FixedPoint:
+    def to(self, fmt: str, policy: str = 'exact') -> 'FixedPoint':
         """Coerce to new format according to policy
 
         Parameters
@@ -95,17 +93,17 @@ class FixedPoint:
         return fp
 
     @property
-    def minval(self):
+    def minval(self) -> float:
         """Minimum value for FixedPoint number"""
         return -(2 ** (self.m - 1))
 
     @property
-    def maxval(self):
+    def maxval(self) -> float:
         """Maximum value for FixedPoint number"""
         return 2 ** (self.m - 1) - 2 ** (-self.n)
 
     @property
-    def resolution(self):
+    def resolution(self) -> float:
         """Resolution of FixedPoint number"""
         return 2 ** (-self.n)
 
@@ -115,11 +113,11 @@ class FixedPoint:
         return self.value >> self.n
 
     @property
-    def fract(self):
+    def fract(self) -> float:
         """Return fractional part"""
         return floor(self.value & (2 ** self.n - 1)) / 2 ** self.n
 
-    def __add__(self, other):
+    def __add__(self, other) -> 'FixedPoint':
         """Add two values
         Adding two FixedPoint values means Q4.2 + Q4.2 -> Q5.2
 
@@ -139,7 +137,7 @@ class FixedPoint:
             newval = self.value * 2 ** -self.n + other
             return self.__class__(newval, self.fmt)
 
-    def __sub__(self, other):
+    def __sub__(self, other) -> 'FixedPoint':
         """Subtract two values
 
         Substracting two FixedPoint values means Q4.2 + Q4.2 -> Q5.2
@@ -166,13 +164,13 @@ class FixedPoint:
     def __float__(self):
         return self.value * 2 ** -self.n
 
-    def __int__(self):
+    def __int__(self) -> int:
         return self.int
 
     def __divmod__(self, other):
         return 0
 
-    def __mul__(self, other):
+    def __mul__(self, other) -> 'FixedPoint':
         """Multiply two values
          Multiplying two FixedPoint values means Q4.2 + Q4.2 -> Q8.2
 
@@ -185,7 +183,7 @@ class FixedPoint:
         newval = float(self) * float(other)
         if isinstance(other, FixedPoint):
             m = self.m + other.m
-            n = max(self.n, self.n)
+            n = max(self.n, other.n)
             newfmt = f'Q{m}.{n}'
             return self.__class__(newval, newfmt)
         else:
@@ -200,7 +198,7 @@ class FixedPoint:
     def __floordiv__(self, other):
         return 0
 
-    def __div__(self, other):
+    def __div__(self, other) -> 'FixedPoint':
         """Divide two values
          **TODO** Multiplying two FixedPoint values means Q4.2 + Q4.2 -> Q8.2
 
@@ -228,49 +226,49 @@ class FixedPoint:
     def __rmod__(self, other):
         return 0
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         if isinstance(other, FixedPoint) and self.fmt == other.fmt:
             return self.value == other.value
         else:
             return float(self) == float(other)
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         if isinstance(other, FixedPoint) and self.fmt == other.fmt:
             return self.value != other.value
         else:
             return float(self) != float(other)
 
-    def __gt__(self, other):
+    def __gt__(self, other) -> bool:
         if isinstance(other, FixedPoint) and self.fmt == other.fmt:
             return self.value > other.value
         else:
             return float(self) > float(other)
 
-    def __ge__(self, other):
+    def __ge__(self, other) -> bool:
         if isinstance(other, FixedPoint) and self.fmt == other.fmt:
             return self.value >= other.value
         else:
             return float(self) >= float(other)
 
-    def __le__(self, other):
+    def __le__(self, other) -> bool:
         if isinstance(other, FixedPoint) and self.fmt == other.fmt:
             return self.value <= other.value
         else:
             return float(self) <= float(other)
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> bool:
         if isinstance(other, FixedPoint) and self.fmt == other.fmt:
             return self.value < other.value
         else:
             return float(self) < float(other)
 
-    def __neg__(self):
+    def __neg__(self) -> 'FixedPoint':
         return self.__class__(self.to_fixedpoint(-float(self.value)), self.fmt)
 
-    def __pos__(self):
+    def __pos__(self) -> 'FixedPoint':
         return self.__class__(self.to_fixedpoint(abs(float(self.value))), self.fmt)
 
-    def __pow__(self, power: int, modulo=None):
+    def __pow__(self, power: int, modulo=None) -> 'FixedPoint':
         """Calculate power of FixedPoint value
 
          Parameters
@@ -285,5 +283,5 @@ class FixedPoint:
         newfmt = f'Q{m}.{n}'
         return self.__class__(newval, newfmt)
 
-    def __abs__(self):
+    def __abs__(self) -> 'FixedPoint':
         return self.__class__(self.to_fixedpoint(abs(float(self.value))), self.fmt)
