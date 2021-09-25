@@ -13,6 +13,8 @@ Example:
     FixedPoint(4.4375, 'Q4.4')
 
 A protoype implementation of a custom dtype for Numpy is work-in-progress.
+Based on: https://github.com/seberg/experimental_user_dtypes
+
 For the Numpy-side see: https://github.com/numpy/numpy/pull/19919 
 
 Example:
