@@ -3,7 +3,6 @@
 
 """
 from __future__ import annotations
-import re
 from math import floor
 from .format import parse_fmt
 
@@ -12,6 +11,8 @@ class FixedPoint:
     """Class to perform fixed point operations on single values
 
     """
+    fmt: str
+    value: int
 
     def __init__(self, value: float, fmt: str):
         """FixedPoint number
@@ -35,7 +36,7 @@ class FixedPoint:
         self.m, self.n = parse_fmt(fmt)
         self.value = self.to_fixedpoint(value)
 
-    def to_fixedpoint(self, value: float, fmt: str = None) -> int:
+    def to_fixedpoint(self, value: float, fmt: str = '') -> int:
         """Convert floating point value to and integer with given format
 
         Parameters
@@ -95,31 +96,33 @@ class FixedPoint:
         return fp
 
     @property
-    def minval(self):
+    def minval(self) -> float:
         """Minimum value for FixedPoint number"""
         return -(2 ** (self.m - 1))
 
     @property
-    def maxval(self):
+    def maxval(self) -> float:
         """Maximum value for FixedPoint number"""
         return 2 ** (self.m - 1) - 2 ** (-self.n)
 
     @property
-    def resolution(self):
+    def resolution(self) -> float:
         """Resolution of FixedPoint number"""
         return 2 ** (-self.n)
 
-    @property
-    def int(self):
+    def __int__(self) -> int:
         """Return integer part of value"""
         return self.value >> self.n
 
+    def __round__(self, n=None):
+        return self.__class__(round(float(self), n), self.fmt)
+
     @property
-    def fract(self):
+    def fract(self) -> float:
         """Return fractional part"""
         return floor(self.value & (2 ** self.n - 1)) / 2 ** self.n
 
-    def __add__(self, other):
+    def __add__(self, other) -> FixedPoint:
         """Add two values
         Adding two FixedPoint values means Q4.2 + Q4.2 -> Q5.2
 
@@ -165,9 +168,6 @@ class FixedPoint:
 
     def __float__(self):
         return self.value * 2 ** -self.n
-
-    def __int__(self):
-        return self.int
 
     def __divmod__(self, other):
         return 0
@@ -270,7 +270,7 @@ class FixedPoint:
     def __pos__(self):
         return self.__class__(self.to_fixedpoint(abs(float(self.value))), self.fmt)
 
-    def __pow__(self, power: int, modulo=None):
+    def __pow__(self, power: int) -> FixedPoint:
         """Calculate power of FixedPoint value
 
          Parameters
@@ -287,3 +287,32 @@ class FixedPoint:
 
     def __abs__(self):
         return self.__class__(self.to_fixedpoint(abs(float(self.value))), self.fmt)
+
+    def __mod__(self, other):
+        return 0
+
+    def __radd__(self, other):
+        return self.__add__(other)
+
+    def __rsub__(self, other):
+        return self.__sub__(other)
+
+    def __rtruediv__(self, other):
+        return self.__div__(other)
+
+    def __rfloordiv__(self, other):
+        return self.__floordiv__(other)
+
+    def __rpow__(self, other):
+        return self.__pow__(other)
+
+    def __rdivmod__(self, other):
+        return self.__divmod__(other)
+
+    def __lshift__(self, other):
+        return self.__class__(self.value << other, self.fmt)
+
+    def __rshift__(self, other):
+        return self.__class__(self.value >> other, self.fmt)
+
+
