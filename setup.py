@@ -8,10 +8,10 @@ setup(
     description="Fixed point calcilations",
     license="BSD 3-Clause Clear License",
     keywords="Fixedpoint ",
-    python_requires=">=3.7",
+    python_requires=">=3.10",
     url="https://github.com/juhasch/fixedpoint",
     packages=find_packages(),
-    install_requires=['numpy'],
+    install_requires=['numpy', 'pytest'],
     long_description_content_type='text/markdown',
     long_description="""
 A simple Python module for fixedpoint calculations.
