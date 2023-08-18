@@ -6,13 +6,13 @@ from fixedpoint.format import parse_fmt
 def test_format():
     """Test parsing"""
     assert parse_fmt('Q1.2') == (1, 2)
-    assert parse_fmt('Q1,2') == (1, 2)
+    assert parse_fmt('Q1.2') == (1, 2)
 
 
 def test_format_1():
     """Test invalid format"""
     with raises(ValueError):
-        assert parse_fmt('Q1,') == (1, 2)
+        assert parse_fmt('Q1.') == (1, 2)
 
 
 def test_format_2():

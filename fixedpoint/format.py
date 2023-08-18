@@ -1,6 +1,5 @@
 from __future__ import annotations
 from typing import Tuple
-import re
 
 
 def parse_fmt(fmt: str) -> Tuple[int, int]:
@@ -18,11 +17,18 @@ def parse_fmt(fmt: str) -> Tuple[int, int]:
     n, m
         Number of int and fract bits
     """
-    match = re.match(r'^Q(\d+).(\d+)', fmt)
-    if match is None:
+    if not fmt.startswith('Q'):
         raise ValueError(f'Invalid format specification {fmt}')
-    m = int(match.group(1))
-    n = int(match.group(2))
+    
+    parts = fmt[1:].split('.')
+    if len(parts) != 2:
+        raise ValueError(f'Invalid format specification {fmt}')
+    
+    try:
+        m = int(parts[0])
+        n = int(parts[1])
+    except ValueError:
+        raise ValueError(f'Invalid format specification {fmt}')
+    
     return m, n
-
 
