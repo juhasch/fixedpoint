@@ -1,3 +1,6 @@
+"""
+conf.py for documentation generation with Sphinx.
+"""
 #
 # FixedPoint documentation build configuration file, created by
 # sphinx-quickstart on Thu Sep 10 21:52:33 2015.

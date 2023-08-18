@@ -1,3 +1,6 @@
+"""
+Fixed-point format parsing
+"""
 from __future__ import annotations
 import re
 
@@ -23,5 +26,3 @@ def parse_fmt(fmt: str) -> (int, int):
     m = int(match.group(1))
     n = int(match.group(2))
     return m, n
-
-
