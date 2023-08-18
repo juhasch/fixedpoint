@@ -11,7 +11,7 @@ setup(
     python_requires=">=3.10",
     url="https://github.com/juhasch/fixedpoint",
     packages=find_packages(),
-    install_requires=['numpy', 'pytest'],
+    install_requires=['numpy'],
     long_description_content_type='text/markdown',
     long_description="""
 A simple Python module for fixedpoint calculations.
