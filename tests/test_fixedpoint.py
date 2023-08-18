@@ -76,7 +76,7 @@ def test_float():
 
 
 def test_int():
-    """Test __int__ method"""
+    """Test __int__ property"""
     a = FixedPoint(1, 'Q2.1')
     assert int(a) == 1
 

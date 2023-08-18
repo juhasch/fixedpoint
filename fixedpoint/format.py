@@ -2,10 +2,11 @@
 Fixed-point format parsing
 """
 from __future__ import annotations
+from typing import Tuple
 import re
 
 
-def parse_fmt(fmt: str) -> (int, int):
+def parse_fmt(fmt: str) -> Tuple[int, int]:
     """Parse Q<m>.<n> string
 
     Parameters

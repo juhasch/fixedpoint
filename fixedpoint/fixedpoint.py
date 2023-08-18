@@ -34,7 +34,7 @@ class FixedPoint:
         self.m, self.n = parse_fmt(fmt)
         self.value = self.to_fixedpoint(value)
 
-    def to_fixedpoint(self, value: float, fmt: str = None) -> int:
+    def to_fixedpoint(self, value: float, fmt: str | None = None) -> int:
         """Convert floating point value to and integer with given format
 
         Parameters
@@ -113,7 +113,7 @@ class FixedPoint:
     def int(self):
         """Return integer part of value"""
         return self.value >> self.n
-
+    
     @property
     def fract(self):
         """Return fractional part"""
