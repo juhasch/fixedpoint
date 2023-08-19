@@ -30,19 +30,19 @@ def test_instantiate_3():
 def test_instantiate_4():
     """Test invalid format"""
     with raises(ValueError):
-        a = FixedPoint(1.5, 'Q2.0')
+        FixedPoint(1.5, 'Q2.0')
 
 
 def test_instantiate_6():
     """Test invalid format"""
     with raises(ValueError):
-        a = FixedPoint(1.5, 'Q0.4')
+        FixedPoint(1.5, 'Q0.4')
 
 
 def test_instantiate_7():
     """Test for too large numbers"""
     with raises(ValueError):
-        a = FixedPoint(1.5, 'Q20.204')
+        FixedPoint(1.5, 'Q20.204')
 
 
 def test_instantiate_8():
@@ -66,7 +66,7 @@ def test_maxval():
 def test_repr():
     """Test __repr__ method"""
     a = FixedPoint(1, 'Q2.1')
-    assert a.__repr__() == "FixedPoint(1.0, 'Q2.1')"
+    assert reppr(a) == "FixedPoint(1.0, 'Q2.1')"
 
 
 def test_float():

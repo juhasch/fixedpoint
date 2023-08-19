@@ -110,12 +110,12 @@ class FixedPoint:
         return 2 ** (-self.n)
 
     @property
-    def int(self):
+    def integer(self) -> int:
         """Return integer part of value"""
         return self.value >> self.n
-    
+
     @property
-    def fract(self):
+    def fract(self) -> float:
         """Return fractional part"""
         return floor(self.value & (2 ** self.n - 1)) / 2 ** self.n
 
@@ -165,7 +165,7 @@ class FixedPoint:
         return self.value * 2 ** -self.n
 
     def __int__(self):
-        return self.int
+        return self.integer
 
     def __divmod__(self, other):
         return 0
