@@ -1,3 +1,6 @@
+"""
+Fixed-point format parsing
+"""
 from __future__ import annotations
 from typing import Tuple
 
@@ -31,4 +34,3 @@ def parse_fmt(fmt: str) -> Tuple[int, int]:
         raise ValueError(f'Invalid format specification {fmt}')
     
     return m, n
-

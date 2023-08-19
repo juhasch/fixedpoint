@@ -36,7 +36,7 @@ class FixedPoint:
         self.m, self.n = parse_fmt(fmt)
         self.value = self.to_fixedpoint(value)
 
-    def to_fixedpoint(self, value: float, fmt: str = '') -> int:
+    def to_fixedpoint(self, value: float, fmt: str | None = None) -> int:
         """Convert floating point value to and integer with given format
 
         Parameters
@@ -56,7 +56,8 @@ class FixedPoint:
             raise ValueError(f'A value of {value} does not fit in the given format {fmt}')
         numbits = self.m + self.n
         if numbits > 32:
-            raise ValueError(f'Implementation only allows 32 Bits for now, {numbits} Bits were requested.')
+            raise ValueError(f'Implementation only allows 32 Bits for now, '
+                             f'{numbits} Bits were requested.')
         return int(value * 2 ** self.n)
 
     def to(self, fmt: str, policy: str = 'exact') -> FixedPoint:
@@ -110,7 +111,8 @@ class FixedPoint:
         """Resolution of FixedPoint number"""
         return 2 ** (-self.n)
 
-    def __int__(self) -> int:
+    @property
+    def integer(self) -> int:
         """Return integer part of value"""
         return self.value >> self.n
 
@@ -138,9 +140,8 @@ class FixedPoint:
             newval = (self.value << (n - self.n)) + (other.value << (n - other.n))
             newfmt = f'Q{m}.{n}'
             return self.__class__(newval * 2 ** -n, newfmt)
-        else:
-            newval = self.value * 2 ** -self.n + other
-            return self.__class__(newval, self.fmt)
+        newval = self.value * 2 ** -self.n + other
+        return self.__class__(newval, self.fmt)
 
     def __sub__(self, other):
         """Subtract two values
@@ -159,15 +160,17 @@ class FixedPoint:
             newval = (self.value << (n - self.n)) - (other.value << (n - other.n))
             newfmt = f'Q{m}.{n}'
             return self.__class__(newval * 2 ** -n, newfmt)
-        else:
-            newval = self.value * 2 ** -self.n - other
-            return self.__class__(newval, self.fmt)
+        newval = self.value * 2 ** -self.n - other
+        return self.__class__(newval, self.fmt)
 
     def __repr__(self):
         return f"FixedPoint({self.__float__()}, '{self.fmt}')"
 
     def __float__(self):
         return self.value * 2 ** -self.n
+
+    def __int__(self):
+        return self.integer
 
     def __divmod__(self, other):
         return 0
@@ -188,8 +191,7 @@ class FixedPoint:
             n = max(self.n, self.n)
             newfmt = f'Q{m}.{n}'
             return self.__class__(newval, newfmt)
-        else:
-            return self.__class__(newval, self.fmt)
+        return self.__class__(newval, self.fmt)
 
     def __rmul__(self, other):
         return self.__mul__(other)
@@ -216,8 +218,7 @@ class FixedPoint:
             n = max(self.n, self.m)
             newfmt = f'Q{m}.{n}'
             return self.__class__(newval, newfmt)
-        else:
-            return self.__class__(newval, self.fmt)
+        return self.__class__(newval, self.fmt)
 
     def __rdiv__(self, other):
         return self.__div__(other)
@@ -231,38 +232,32 @@ class FixedPoint:
     def __eq__(self, other):
         if isinstance(other, FixedPoint) and self.fmt == other.fmt:
             return self.value == other.value
-        else:
-            return float(self) == float(other)
+        return float(self) == float(other)
 
     def __ne__(self, other):
         if isinstance(other, FixedPoint) and self.fmt == other.fmt:
             return self.value != other.value
-        else:
-            return float(self) != float(other)
+        return float(self) != float(other)
 
     def __gt__(self, other):
         if isinstance(other, FixedPoint) and self.fmt == other.fmt:
             return self.value > other.value
-        else:
-            return float(self) > float(other)
+        return float(self) > float(other)
 
     def __ge__(self, other):
         if isinstance(other, FixedPoint) and self.fmt == other.fmt:
             return self.value >= other.value
-        else:
-            return float(self) >= float(other)
+        return float(self) >= float(other)
 
     def __le__(self, other):
         if isinstance(other, FixedPoint) and self.fmt == other.fmt:
             return self.value <= other.value
-        else:
-            return float(self) <= float(other)
+        return float(self) <= float(other)
 
     def __lt__(self, other):
         if isinstance(other, FixedPoint) and self.fmt == other.fmt:
             return self.value < other.value
-        else:
-            return float(self) < float(other)
+        return float(self) < float(other)
 
     def __neg__(self):
         return self.__class__(self.to_fixedpoint(-float(self.value)), self.fmt)
