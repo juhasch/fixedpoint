@@ -66,7 +66,7 @@ def test_maxval():
 def test_repr():
     """Test __repr__ method"""
     a = FixedPoint(1, 'Q2.1')
-    assert reppr(a) == "FixedPoint(1.0, 'Q2.1')"
+    assert repr(a) == "FixedPoint(1.0, 'Q2.1')"
 
 
 def test_float():

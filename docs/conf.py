@@ -22,7 +22,7 @@ import sys
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('..'))
 
-import fixedpoint
+import fixedpoint  # pylint: disable=wrong-import-position
 
 # -- General configuration ------------------------------------------------
 
@@ -56,7 +56,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'FixedPoint'
-copyright = '2018, Juergen Hasch'
+copyright = '2018, Juergen Hasch'  # pylint: disable=redefined-builtin
 author = 'Jürgen Hasch'
 
 # The version info for the project you're documenting, acts as replacement for
