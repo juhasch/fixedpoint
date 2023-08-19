@@ -1,12 +1,9 @@
 # FixedPoint
 
-FixedPoint is a Python module designed to perform fixed-point calculations. It provides a simple and efficient way to handle fixed-point numbers in your Python applications.
+FixedPoint is a Python module designed to perform fixed-point calculations
+for single numbers. 
 
-## Features
-
-- Implements fixed-point calculations for single numbers.
-- Easy to use and integrate into your Python projects.
-- Provides accurate results, ideal for financial and scientific computations.
+Main use is to try out approaches for a NumPy dtype extension.
 
 ## Installation
 
