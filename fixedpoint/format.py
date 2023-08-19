@@ -22,15 +22,15 @@ def parse_fmt(fmt: str) -> Tuple[int, int]:
     """
     if not fmt.startswith('Q'):
         raise ValueError(f'Invalid format specification {fmt}')
-    
+
     parts = fmt[1:].split('.')
     if len(parts) != 2:
         raise ValueError(f'Invalid format specification {fmt}')
-    
+
     try:
         m = int(parts[0])
         n = int(parts[1])
-    except ValueError:
-        raise ValueError(f'Invalid format specification {fmt}')
-    
+    except ValueError as exc:
+        raise ValueError(f'Invalid format specification {fmt}') from exc
+
     return m, n

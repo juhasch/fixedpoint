@@ -16,13 +16,8 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     license="BSD 3-Clause Clear License",
-<<<<<<< HEAD
-    keywords="Fixedpoint",
-    python_requires=">=3.7",
-=======
     keywords="Fixedpoint ",
     python_requires=">=3.10",
->>>>>>> main
     url="https://github.com/juhasch/fixedpoint",
     packages=find_packages(),
     include_package_data=True,

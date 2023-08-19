@@ -309,5 +309,3 @@ class FixedPoint:
 
     def __rshift__(self, other):
         return self.__class__(self.value >> other, self.fmt)
-
-
